@@ -1,7 +1,7 @@
 import LoginForm from './SignForm'
 
-const SignUp = () => {
+const SignIn = () => {
 	return <LoginForm isSignUp={false} />
 }
 
-export default SignUp
+export default SignIn

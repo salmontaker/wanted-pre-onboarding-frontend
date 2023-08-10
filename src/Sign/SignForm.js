@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const LoginForm = ({ isSignUp }) => {
-	const API_BASE = process.env.REACT_APP_API_BASE
+	const request = axios.create({
+		baseURL: process.env.REACT_APP_API_BASE,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -27,17 +32,13 @@ const LoginForm = ({ isSignUp }) => {
 	}
 
 	const sendData = () => {
-		const url = `${API_BASE}/auth/${isSignUp ? 'signup' : 'signin'}`
 		const data = {
 			email: email,
 			password: password,
 		}
-		const config = {
-			'Content-Type': 'application/json',
-		}
 
-		axios
-			.post(url, data, config)
+		request
+			.post(`/auth/${isSignUp ? 'signup' : 'signin'}`, data)
 			.then((res) => {
 				// 회원가입시에는 로그인 페이지로, 로그인시에는 로컬스토리지에 토큰 저장후 TODO 페이지로
 				if (isSignUp) {
