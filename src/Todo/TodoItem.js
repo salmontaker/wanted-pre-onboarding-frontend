@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import style from './Todo.module.css'
 
 const TodoItem = ({ id, todo, isCompleted, updateTodo, deleteTodo }) => {
 	const [todoCheck, setTodoCheck] = useState(isCompleted)
@@ -40,35 +41,57 @@ const TodoItem = ({ id, todo, isCompleted, updateTodo, deleteTodo }) => {
 	}
 
 	return (
-		<li>
-			<label>
-				<input type='checkbox' checked={todoCheck} onChange={onTodoCheckChanged} />
+		<li className={style.todoItem}>
+			<label className={style.todoLabel}>
+				<input
+					className={style.todoCheck}
+					type='checkbox'
+					checked={todoCheck}
+					onChange={onTodoCheckChanged}
+				/>
 				{isEditMode ? (
 					<input
+						className={style.todoModify}
 						data-testid='modify-input'
 						type='text'
 						onChange={onTodoModifyChanged}
 						value={todoModify}
 					/>
 				) : (
-					<span>{todo}</span>
+					<span className={style.todoText}>{todo}</span>
 				)}
 			</label>
 			{isEditMode ? (
 				<>
-					<button data-testid='submit-button' onClick={onSubmitButtonClicked}>
+					<button
+						className={style.todoButton}
+						data-testid='submit-button'
+						onClick={onSubmitButtonClicked}
+					>
 						제출
 					</button>
-					<button data-testid='cancel-button' onClick={onCancelButtonClicked}>
+					<button
+						className={style.todoButton}
+						data-testid='cancel-button'
+						onClick={onCancelButtonClicked}
+					>
 						취소
 					</button>
 				</>
 			) : (
 				<>
-					<button data-testid='modify-button' onClick={onEditButtonClicked}>
+					<button
+						className={style.todoButton}
+						data-testid='modify-button'
+						onClick={onEditButtonClicked}
+					>
 						수정
 					</button>
-					<button data-testid='delete-button' onClick={onDeleteButtonClicked}>
+					<button
+						className={style.todoButton}
+						data-testid='delete-button'
+						onClick={onDeleteButtonClicked}
+					>
 						삭제
 					</button>
 				</>

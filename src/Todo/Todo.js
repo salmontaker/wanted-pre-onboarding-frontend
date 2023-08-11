@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import TodoItem from './TodoItem'
+import style from './Todo.module.css'
 
 const Todo = () => {
 	const request = axios.create({
@@ -30,6 +31,9 @@ const Todo = () => {
 				setTodoInput('')
 			})
 			.catch((err) => {
+				const message = err.response.data.message
+
+				alert(message)
 				console.log(err)
 			})
 	}
@@ -41,6 +45,9 @@ const Todo = () => {
 				setTodoList(res.data)
 			})
 			.catch((err) => {
+				const message = err.response.data.message
+
+				alert(message)
 				console.log(err)
 			})
 	}
@@ -60,6 +67,9 @@ const Todo = () => {
 				)
 			})
 			.catch((err) => {
+				const message = err.response.data.message
+
+				alert(message)
 				console.log(err)
 			})
 	}
@@ -71,8 +81,16 @@ const Todo = () => {
 				setTodoList(todoList.filter((item) => item.id !== id))
 			})
 			.catch((err) => {
+				const message = err.response.data.message
+
+				alert(message)
 				console.log(err)
 			})
+	}
+
+	const onLogoutButtonClicked = () => {
+		localStorage.removeItem('access_token')
+		navigate('/signin')
 	}
 
 	useEffect(() => {
@@ -84,21 +102,39 @@ const Todo = () => {
 	}, [])
 
 	return (
-		<div>
-			<input data-testid='new-todo-input' onChange={onTodoInputChanged} value={todoInput} />
-			<button data-testid='new-todo-add-button' onClick={createTodo}>
-				추가
-			</button>
-			{todoList.map((item) => (
-				<TodoItem
-					key={item.id}
-					id={item.id}
-					todo={item.todo}
-					isCompleted={item.isCompleted}
-					updateTodo={updateTodo}
-					deleteTodo={deleteTodo}
+		<div className={style.container}>
+			<h1 className={style.todoTitle}>TODO!</h1>
+			<ol className={style.todoList}>
+				{todoList.map((item) => (
+					<TodoItem
+						key={item.id}
+						id={item.id}
+						todo={item.todo}
+						isCompleted={item.isCompleted}
+						updateTodo={updateTodo}
+						deleteTodo={deleteTodo}
+					/>
+				))}
+			</ol>
+			<div className={style.createContainer}>
+				<input
+					className={style.createTodoInput}
+					data-testid='new-todo-input'
+					onChange={onTodoInputChanged}
+					value={todoInput}
+					placeholder='해야할 일 입력...'
 				/>
-			))}
+				<button
+					className={style.createTodoButton}
+					data-testid='new-todo-add-button'
+					onClick={createTodo}
+				>
+					추가하기
+				</button>
+			</div>
+			<button className={style.logoutButton} onClick={onLogoutButtonClicked}>
+				로그아웃
+			</button>
 		</div>
 	)
 }

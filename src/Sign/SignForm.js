@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
+import styles from './SignForm.module.css'
 
-const LoginForm = ({ isSignUp }) => {
+const SignForm = ({ isSignUp }) => {
 	const request = axios.create({
 		baseURL: process.env.REACT_APP_API_BASE,
 		headers: {
@@ -49,6 +50,9 @@ const LoginForm = ({ isSignUp }) => {
 				}
 			})
 			.catch((err) => {
+				const message = err.response.data.message
+
+				alert(message)
 				console.log(err)
 			})
 	}
@@ -61,10 +65,27 @@ const LoginForm = ({ isSignUp }) => {
 	}, [navigate])
 
 	return (
-		<div>
-			<input data-testid='email-input' type='email' onChange={onChangeEmail} />
-			<input data-testid='password-input' type='password' onChange={onChangePassword} />
+		<div className={styles.container}>
+			<h1 className={styles.h1}>{isSignUp ? '회원가입' : '로그인'}</h1>
+			<input
+				className={styles.input}
+				data-testid='email-input'
+				type='email'
+				onChange={onChangeEmail}
+				placeholder='이메일 주소'
+			/>
+			<input
+				className={styles.input}
+				data-testid='password-input'
+				type='password'
+				onChange={onChangePassword}
+				placeholder='비밀번호 (8자리 이상)'
+			/>
+			<Link className={styles.link} to={isSignUp ? '/signin' : '/signup'}>
+				{isSignUp ? '로그인 페이지로' : '회원가입 페이지로'}
+			</Link>
 			<button
+				className={styles.button}
 				data-testid={isSignUp ? 'signup-button' : 'signin-button'}
 				disabled={!(isValidEmail && isValidPassword)}
 				onClick={sendData}
@@ -75,4 +96,4 @@ const LoginForm = ({ isSignUp }) => {
 	)
 }
 
-export default LoginForm
+export default SignForm

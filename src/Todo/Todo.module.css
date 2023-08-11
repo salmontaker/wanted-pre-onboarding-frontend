@@ -1,0 +1,91 @@
+.container {
+	background: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+	display: flex;
+	flex-direction: column;
+	height: 600px;
+	justify-content: center;
+	padding: 12px;
+	width: 500px;
+}
+
+.todoTitle {
+	text-align: center;
+}
+
+.todoList {
+	padding: 0;
+	flex: 1;
+	overflow-y: auto;
+}
+
+.todoItem {
+	align-items: center;
+	display: flex;
+	list-style: none;
+	margin-bottom: 12px;
+}
+
+.todoLabel {
+	flex: 1;
+	cursor: pointer;
+}
+
+.todoCheck {
+	width: 24px;
+	height: 24px;
+}
+
+.todoText {
+	font-size: 24px;
+	margin-left: 8px;
+}
+
+.todoModify {
+	font-size: 24px;
+	margin: 0;
+	outline: none;
+}
+
+.todoButton {
+	font-size: 16px;
+	padding: 8px;
+	border: 1px solid #9a9a9a;
+	border-radius: 12px;
+}
+
+.createContainer {
+	display: flex;
+	margin-bottom: 24px;
+}
+
+.createTodoInput {
+	flex: 1;
+	border: 1px solid #9a9a9a;
+	border-radius: 20px;
+	padding: 12px 12px;
+}
+
+.createTodoButton {
+	background: #ffb12b;
+	border: 1px solid #ffb12b;
+	border-radius: 20px;
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin-left: 12px;
+	padding: 12px 12px;
+}
+
+.logoutButton {
+	background: #ff0000;
+	border: 1px solid #ff0000;
+	border-radius: 20px;
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+}
