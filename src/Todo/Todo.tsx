@@ -4,6 +4,12 @@ import axios from 'axios'
 import TodoItem from './TodoItem'
 import style from './Todo.module.css'
 
+type TodoObj = {
+    id: string,
+    todo: string,
+    isCompleted: boolean
+}
+
 const Todo = () => {
 	const request = axios.create({
 		baseURL: process.env.REACT_APP_API_BASE,
@@ -14,11 +20,11 @@ const Todo = () => {
 	})
 
 	const [todoInput, setTodoInput] = useState('')
-	const [todoList, setTodoList] = useState([])
+	const [todoList, setTodoList] = useState<TodoObj[]>([])
 
 	const navigate = useNavigate()
 
-	const onTodoInputChanged = (e) => {
+	const onTodoInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
 		setTodoInput(value)
 	}
@@ -52,7 +58,7 @@ const Todo = () => {
 			})
 	}
 
-	const updateTodo = (id, todo, isCompleted) => {
+	const updateTodo = (id: string, todo: string, isCompleted: boolean) => {
 		request
 			.put(`/todos/${id}`, { todo: todo, isCompleted: isCompleted })
 			.then((res) => {
@@ -74,7 +80,7 @@ const Todo = () => {
 			})
 	}
 
-	const deleteTodo = (id) => {
+	const deleteTodo = (id: string) => {
 		request
 			.delete(`/todos/${id}`)
 			.then(() => {

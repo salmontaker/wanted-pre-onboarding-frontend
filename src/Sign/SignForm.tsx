@@ -3,7 +3,11 @@ import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import styles from './SignForm.module.css'
 
-const SignForm = ({ isSignUp }) => {
+type Props = {
+    isSignUp: boolean
+}
+
+const SignForm = ({ isSignUp }: Props) => {
 	const request = axios.create({
 		baseURL: process.env.REACT_APP_API_BASE,
 		headers: {
@@ -18,14 +22,14 @@ const SignForm = ({ isSignUp }) => {
 
 	const navigate = useNavigate()
 
-	const onChangeEmail = (e) => {
+	const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
 
 		setEmail(value)
 		setIsValidEmail(value.indexOf('@') !== -1)
 	}
 
-	const onChangePassword = (e) => {
+	const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
 
 		setPassword(value)
@@ -62,7 +66,7 @@ const SignForm = ({ isSignUp }) => {
 		if (localStorage.getItem('access_token') !== null) {
 			navigate('/todo')
 		}
-	}, [navigate])
+	}, [])
 
 	return (
 		<div className={styles.container}>

@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import style from './Todo.module.css'
 
-const TodoItem = ({ id, todo, isCompleted, updateTodo, deleteTodo }) => {
+type Props = {
+    id: string,
+    todo: string,
+    isCompleted: boolean,
+    updateTodo:Function,
+    deleteTodo: Function
+}
+
+const TodoItem = ({ id, todo, isCompleted, updateTodo, deleteTodo }: Props) => {
 	const [todoCheck, setTodoCheck] = useState(isCompleted)
 	const [todoModify, setTodoModify] = useState('')
 	const [isEditMode, setIsEditMode] = useState(false)
@@ -13,7 +21,7 @@ const TodoItem = ({ id, todo, isCompleted, updateTodo, deleteTodo }) => {
 	}
 
 	// TODO input창의 값이 변경 되었을 때 (수정모드)
-	const onTodoModifyChanged = (e) => {
+	const onTodoModifyChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
 		setTodoModify(value)
 	}
