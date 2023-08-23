@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'
 import styles from './SignForm.module.css'
+import { apiClient } from '../utils/axios'
 
 type Props = {
     isSignUp: boolean
 }
 
 const SignForm = ({ isSignUp }: Props) => {
-	const request = axios.create({
-		baseURL: process.env.REACT_APP_API_BASE,
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [isValidEmail, setIsValidEmail] = useState(false)
@@ -42,7 +35,7 @@ const SignForm = ({ isSignUp }: Props) => {
 			password: password,
 		}
 
-		request
+		apiClient
 			.post(`/auth/${isSignUp ? 'signup' : 'signin'}`, data)
 			.then((res) => {
 				// 회원가입시에는 로그인 페이지로, 로그인시에는 로컬스토리지에 토큰 저장후 TODO 페이지로

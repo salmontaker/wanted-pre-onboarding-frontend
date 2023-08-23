@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import TodoItem from './TodoItem'
 import style from './Todo.module.css'
+import { apiClient } from '../utils/axios'
 
 type TodoObj = {
     id: string,
@@ -11,14 +11,6 @@ type TodoObj = {
 }
 
 const Todo = () => {
-	const request = axios.create({
-		baseURL: process.env.REACT_APP_API_BASE,
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-			'Content-Type': 'application/json',
-		},
-	})
-
 	const [todoInput, setTodoInput] = useState('')
 	const [todoList, setTodoList] = useState<TodoObj[]>([])
 
@@ -30,7 +22,7 @@ const Todo = () => {
 	}
 
 	const createTodo = () => {
-		request
+		apiClient
 			.post('/todos', { todo: todoInput })
 			.then((res) => {
 				setTodoList([...todoList, res.data])
@@ -45,7 +37,7 @@ const Todo = () => {
 	}
 
 	const getTodos = () => {
-		request
+		apiClient
 			.get('/todos')
 			.then((res) => {
 				setTodoList(res.data)
@@ -59,7 +51,7 @@ const Todo = () => {
 	}
 
 	const updateTodo = (id: string, todo: string, isCompleted: boolean) => {
-		request
+		apiClient
 			.put(`/todos/${id}`, { todo: todo, isCompleted: isCompleted })
 			.then((res) => {
 				const data = res.data
@@ -81,7 +73,7 @@ const Todo = () => {
 	}
 
 	const deleteTodo = (id: string) => {
-		request
+		apiClient
 			.delete(`/todos/${id}`)
 			.then(() => {
 				setTodoList(todoList.filter((item) => item.id !== id))
